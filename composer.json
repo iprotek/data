@@ -1,0 +1,36 @@
+{
+    "name": "iprotek/data",
+    "description": "A complex data form for database",
+    "keywords": ["laravel", "plugin", "iprotek-core"],
+    "authors": [
+        {
+            "name": "Joseph Aguilar",
+            "email": "admin@iprotek.net"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "iProtek\\Data\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.0.0",
+        "illuminate/support": "^8.0|^9.0|^10.0"
+    },
+    "type": "library",  
+    "license": "MIT", 
+    "require-dev": {
+        "phpunit/phpunit": "~6.0 || ~7.0 || ~9.0"
+    },
+    "suggest": {
+        "ext-intl": "Dynamic data handling for iprotek."
+    }, 
+    "extra": {
+        "laravel": {
+            "providers": [
+                "iProtek\\Data\\iProtekServiceDataProvider"
+            ]
+        }
+    },
+    "version": "1.0.0" 
+}
