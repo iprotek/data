@@ -6,7 +6,7 @@ use iProtek\Data\Models\DataModel;
 use iProtek\Data\Models\DataModelField;
 use iProtek\Data\Models\DataModelFieldValue;
 
-class ProjectFieldHelper
+class DataFieldHelper
 { 
     public static function setFields($fields, ProjectDataModel $id, $parent_id , $user_pay_id ){
     
