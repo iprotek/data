@@ -3,7 +3,7 @@
 namespace iProtek\Data\Http\Controllers\Manage\ProjectsMonitoring;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\_Common\_CommonController;  
+use Illuminate\Routing\Controller as BaseController;  
 use iProtek\Data\Models\Data;
 use iProtek\Data\Models\DataModel; 
 use iProtek\Data\Models\ModelField;
@@ -12,7 +12,7 @@ use iProtek\Data\Models\DataModelFieldValue;
 use App\Helpers\ProjectMonitoring\DataFieldHelper;
 use App\Models\UserAdminPayAccount;
 
-class DataController extends _CommonController
+class DataController extends BaseController
 {
     //
 

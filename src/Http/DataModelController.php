@@ -3,7 +3,7 @@
 namespace iProtek\Data\Http\Controllers\Manage\ProjectsMonitoring;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\_Common\_CommonController;  
+use Illuminate\Routing\Controller as BaseController;  
 use iProtek\Data\Models\DataModel;
 use iProtek\Data\Models\DataModelField;
 use App\Models\UserAdminPayAccount;

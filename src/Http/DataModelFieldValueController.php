@@ -3,6 +3,7 @@
 namespace iProtek\Data\Http\Controllers\Manage\ProjectsMonitoring;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller as BaseController;  
 
 class DataModelFieldValueController extends Controller
 {

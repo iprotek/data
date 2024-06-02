@@ -3,12 +3,12 @@
 namespace iProtek\Data\Http\Controllers\Manage\ProjectsMonitoring;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\_Common\_CommonController; 
+use Illuminate\Routing\Controller as BaseController;  
 use iProtek\Data\Models\ModelField;
 use App\Models\UserAdminPayAccount;
 use iProtek\Data\Models\DataModelFieldValue;
 
-class ModelFieldController extends _CommonController
+class ModelFieldController extends BaseController
 {
     //
     public $guard = 'admin';
