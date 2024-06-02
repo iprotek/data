@@ -18,7 +18,7 @@ class UpdateProjectOrderNo extends Migration
             $table->integer('order_no')->nullable();  
             $table->integer('project_data_id')->nullable();  
         });
-        Schema::table('project_data_model_fields', function (Blueprint $table) { 
+        Schema::table('data_model_fields', function (Blueprint $table) { 
             $table->integer('order_no')->nullable();  
         });
     }
