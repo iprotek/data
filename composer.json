@@ -1,7 +1,7 @@
 {
     "name": "iprotek/data",
     "description": "A complex data form for database",
-    "keywords": ["laravel", "plugin", "iprotek-core"],
+    "keywords": ["laravel", "plugin", "iprotek-data"],
     "authors": [
         {
             "name": "Joseph Aguilar",
