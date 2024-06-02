@@ -1,6 +1,6 @@
 <?php
 
-namespace iProtek\Data\Http\Controllers\Manage\ProjectsMonitoring;
+namespace iProtek\Data\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;  
