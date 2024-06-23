@@ -7,13 +7,14 @@ use Illuminate\Routing\Controller as BaseController;
 use iProtek\Data\Models\ModelField;
 use App\Models\UserAdminPayAccount;
 use iProtek\Data\Models\DataModelFieldValue;
+use iProtek\Core\Http\Controllers\_Common\_CommonController; 
 
-class ModelFieldController extends BaseController
+class ModelFieldController extends _CommonController
 {
     //
     public $guard = 'admin';
     public function index(Request $request){
-        return $this->view('manage.projects.model-fields.index');
+        return $this->view('project-data::manage.model-fields.index');
         
     }
 
