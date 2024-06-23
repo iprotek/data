@@ -17,7 +17,16 @@
 @endsection
 @section('content') 
   <div id="main-content">
-    <model-fields-view></model-fields-view>  
+    <?php
+      $user_id = auth()->user()->id;
+      $user_admin = \App\Models\UserAdminPayAccount::where('user_admin_id', $user_id)->first();
+      $group_id = 0;
+      if($user_admin){
+        $group_id = $user_admin->own_proxy_group_id;
+      }
+
+    ?>
+    <model-fields-view group_id="{{$group_id}}" is_data="1"></model-fields-view>  
   </div>
   
 @endsection
