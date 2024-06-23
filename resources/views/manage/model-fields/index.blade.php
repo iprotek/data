@@ -26,5 +26,5 @@
   <script>
     ActivateMenu(['menu-model-fields']);
   </script>
-  <script src="/js/manage/projects-monitoring/model-fields.js"> </script>
+  <script src="/iprotek/js/manage/iprotek-data/model-fields.js"> </script>
 @endsection

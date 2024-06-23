@@ -37,5 +37,5 @@
   <script>
     ActivateMenu(['menu-searches']);
   </script>
-  <script src="/js/manage/projects-monitoring/searches.js"> </script>
+  <script src="/iprotek/js/manage/iprotek-data/searches.js"> </script>
 @endsection
