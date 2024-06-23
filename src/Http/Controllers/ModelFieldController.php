@@ -14,7 +14,7 @@ class ModelFieldController extends _CommonController
     //
     public $guard = 'admin';
     public function index(Request $request){
-        return $this->view('project_data::manage.model-fields.index');
+        return $this->view('iprotek_data::manage.model-fields.index');
         
     }
 
