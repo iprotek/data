@@ -26,9 +26,8 @@
     }
 
   ?>
+    <searches-view group_id="{{$group_id}}" is_data="1"></searches-view>  
 
-
-    <searches-view group_id="{{$group_id}}" :is_data="1"></searches-view>  
   </div>
   
 @endsection
