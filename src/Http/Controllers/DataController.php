@@ -16,19 +16,19 @@ class DataController extends BaseController
 {
     //
 
-    public function contact_projects(Request $request, ProjectData $id){
+    public function contact_projects(Request $request, Data $id){
         if($id->data_model_type == 'project')
             return [];
-        $results = ProjectDataModelFieldValue::where('value3', $id->id)->select('project_data_id')->groupBy('project_data_id')->get()->pluck('project_data_id')->toArray();
+        $results = DataModelFieldValue::where('value3', $id->id)->select('project_data_id')->groupBy('project_data_id')->get()->pluck('project_data_id')->toArray();
         
-        $projects = ProjectData::with('data_model')->where('data_model_type','project')->whereIn('id', $results)->get();
+        $projects = Data::with('data_model')->where('data_model_type','project')->whereIn('id', $results)->get();
         return $projects;
     }
 
-    public function get(Request $request, ProjectData $id){
+    public function get(Request $request, Data $id){
         
         
-        $result = ProjectDataModel::with(['fields'=>function($q){
+        $result = DataModel::with(['fields'=>function($q){
             $q->with('model_field');//->select('*', \DB::raw(" '[]' as data_values "));
         }])->find($id->data_model_id);
 
@@ -44,7 +44,7 @@ class DataController extends BaseController
 
     public function list(Request $request){
 
-        $project_model_fields = ProjectData::with(['data_model']);//BillingAccount::on(); 
+        $project_model_fields = Data::with(['data_model']);//BillingAccount::on(); 
         $search_text = str_replace(' ','%', $request->search?:"");
         $project_model_fields->whereRaw(" name LIKE CONCAT('%',?,'%')",[$search_text])->orderBy('name','ASC');
         if($request->data_model_id > 0){
@@ -57,7 +57,7 @@ class DataController extends BaseController
     }
 
     public function list_selection(Request $request){
-        $fields = ProjectData::on();//BillingAccount::on(); 
+        $fields = Data::on();//BillingAccount::on(); 
         $search_text = str_replace(' ','%', $request->search_text?:"");
         $fields->whereRaw(" name LIKE CONCAT('%',?,'%')",[$search_text]);
         $fields->select('id', 'name as text');
@@ -66,7 +66,7 @@ class DataController extends BaseController
     }
 
     public function name_check(Request $request){
-        $check = ProjectData::where('name', $request->name)->first();
+        $check = Data::where('name', $request->name)->first();
         if($check)
             return ["status"=>1,"message"=>"Item", "data"=>$check];
         return ["status"=>0,"message"=>"Not Found",];
@@ -82,19 +82,19 @@ class DataController extends BaseController
                 "model"  =>  "required",
             ]);
 
-            $data_model = ProjectDataModel::where('type', $request->model)->first();
+            $data_model = DataModel::where('type', $request->model)->first();
             if(!$data_model){
                 return ["status"=>0, "message"=>"Model invalidated."];
             }
             
             //Select
-            $project_data = ProjectData::where('name', $name)->first();
+            $project_data = Data::where('name', $name)->first();
             if($project_data && $project_data->id == $request->data_id){
                 return ["status"=>0, "message"=>"Cannot link to own."];
             }
             //Create if not exists
             else if(!$project_data){
-                $project_data = ProjectData::create([
+                $project_data = Data::create([
                     "name"=>$name,
                     "details"=>"",
                     "data_model_type"=>$request->model,
@@ -103,7 +103,7 @@ class DataController extends BaseController
             }
             //Add to field value
             //
-            $value_check = ProjectDataModelFieldValue::where([
+            $value_check = DataModelFieldValue::where([
                 "project_data_id"=>$request->data_id,
                 "value_target"=>3,
                 "value3"=>$project_data->id,
@@ -112,9 +112,9 @@ class DataController extends BaseController
             if($value_check){
                 return ["status"=>0, "message"=>"Already exists."];
             }
-            $count = ProjectDataModelFieldValue::where(["project_data_id"=>$request->data_id, "data_model_field_id"=>$request->data_model_field_id])->count() + 1;
+            $count = DataModelFieldValue::where(["project_data_id"=>$request->data_id, "data_model_field_id"=>$request->data_model_field_id])->count() + 1;
            
-            $project_value = ProjectDataModelFieldValue::create([
+            $project_value = DataModelFieldValue::create([
                 "order_id"=>$count,
                 "order_no"=>$count,
                 "project_data_id"=>$request->data_id,
@@ -124,7 +124,7 @@ class DataController extends BaseController
                 "value3"=>$project_data->id,
                 "data_model_field_id"=>$request->data_model_field_id
             ]);
-            $project_value = ProjectDataModelFieldValue::with(['link_data'])->find($project_value->id);
+            $project_value = DataModelFieldValue::with(['link_data'])->find($project_value->id);
 
         }else{
             if(!$name){
@@ -141,7 +141,7 @@ class DataController extends BaseController
     public function add(Request $request){
 
         //Check if already exists by name
-        $exists = ProjectData::where('name', $request->name)->first();
+        $exists = Data::where('name', $request->name)->first();
         if($exists){
             return ["status"=>0, "message"=>"Name Already Exists."];
         }
@@ -152,7 +152,7 @@ class DataController extends BaseController
             return ["status"=>0, "message"=>"User Admin not found."];
         } 
 
-        $projectData = ProjectData::create([
+        $Data = Data::create([
             "name"=>$request->name,
             "details"=>$request->details,
             "data_model_id"=>$request->data_model_id,
@@ -160,13 +160,13 @@ class DataController extends BaseController
         ]);
 
 
-        return ["status"=>1, "message"=>"Successfully Added", "data"=>$projectData];
+        return ["status"=>1, "message"=>"Successfully Added", "data"=>$Data];
     }
 
-    public function update(Request $request, ProjectData $id){
+    public function update(Request $request, Data $id){
 
         //Check if already exists by name
-        $exists = ProjectData::where('name', $request->name)->whereRaw(" id <> ?",[$id->id])->first();
+        $exists = Data::where('name', $request->name)->whereRaw(" id <> ?",[$id->id])->first();
         if($exists){
             return ["status"=>0, "message"=>"Name already exists."];
         }
@@ -192,21 +192,21 @@ class DataController extends BaseController
     }
 
     
-    public function data_value(Request $request, ProjectDataModelField $id){
+    public function data_value(Request $request, DataModelField $id){
         
         $this->validate($request, [
             "data_id"  =>  "required",
             //"data_type"=>"required",
         ]);
 
-        $modelField = ProjectModelField::find($id->model_field_id);
+        $modelField = ModelField::find($id->model_field_id);
         if(!$modelField){
             return ["status"=>0, "message"=>"Field not found.".$id->model_field_id];
         }
 
 
         if( in_array($modelField->data_type, ["text", "date", "bool"]) ){
-            $value = ProjectDataModelFieldValue::where([
+            $value = DataModelFieldValue::where([
                 'project_data_id'=> $request->data_id,
                 'data_model_id'=> $id->data_model_id,
                 'data_model_field_id'=>$id->id
@@ -221,7 +221,7 @@ class DataController extends BaseController
                 $value->save();
             }else{ 
                 $val_target= $modelField->data_type == 'text' ? 2:1;
-               $value = ProjectDataModelFieldValue::create([
+               $value = DataModelFieldValue::create([
                     "order_id"=>$request->order_id,
                     "data_model_id"=>$id->data_model_id,
                     "data_model_field_id"=>$id->id,

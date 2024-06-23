@@ -19,14 +19,14 @@ class ModelFieldController extends BaseController
 
     public function list(Request $request){
         
-        $project_model_fields = ProjectModelField::on();//BillingAccount::on(); 
+        $project_model_fields = ModelField::on();//BillingAccount::on(); 
         $search_text = str_replace(' ','%', $request->search?:"");
         $project_model_fields->whereRaw(" name LIKE CONCAT('%',?,'%')",[$search_text])->orderBy('name','ASC');
         return $project_model_fields->paginate(10);
     }
 
     public function list_selection(Request $request){
-        $fields = ProjectModelField::on();//BillingAccount::on(); 
+        $fields = ModelField::on();//BillingAccount::on(); 
         $search_text = str_replace(' ','%', $request->search_text?:"");
         $fields->whereRaw(" name LIKE CONCAT('%',?,'%')",[$search_text]);
         $fields->select('id', \DB::raw('CONCAT(name, " - [ ", data_type," ]")  as text'), 'data_type', 'name');
@@ -34,12 +34,12 @@ class ModelFieldController extends BaseController
         return $fields->paginate(10);
     }
 
-    public function remove(Request $request, ProjectModelField $id){
+    public function remove(Request $request, ModelField $id){
         $id->delete();
         return ["status"=>1, "message"=>"Successfully Removed"];
     }
 
-    public function update(Request $request, ProjectModelField $id){
+    public function update(Request $request, ModelField $id){
         $this->validate($request, [
             "name"      =>  "required",
             //"data_type" =>  "required"
@@ -72,7 +72,7 @@ class ModelFieldController extends BaseController
             "data_type" =>  "required"
         ]);
 
-        $project_model_field =  ProjectModelField::where('name', $request->name)->first();
+        $project_model_field =  ModelField::where('name', $request->name)->first();
 
         if($project_model_field){
             return ["status"=>0, "message"=>"Field name already Exists"];
@@ -85,7 +85,7 @@ class ModelFieldController extends BaseController
             return ["status"=>0, "message"=>"User Admin not found."];
         } 
 
-        $added = ProjectModelField::create([
+        $added = ModelField::create([
             "name"=>$request->name,
             "pay_created_by"=>$user_admin->pay_app_user_account_id,
             "data_type"=>$request->data_type,
