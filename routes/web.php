@@ -16,7 +16,7 @@ Route::middleware('web')->group(function(){
     
     Route::middleware(['auth_web_pay_checker', 'pay.account'])->group(function(){
 
-      Route::prefix('data')->group(function(){
+      Route::prefix('iprotek-data')->group(function(){
         Route::prefix('searches')->name('.searches')->group(function(){
             Route::get('/',  [ DataModelController::class, 'index' ])->name('.index'); 
             //Route::get('/pay-accounts',  [ DataController::class, 'pay_accounts' ])->name('.pay-accounts'); 
@@ -61,7 +61,7 @@ Route::middleware('web')->group(function(){
       });
 
     });
-    
+
   });
 
 });

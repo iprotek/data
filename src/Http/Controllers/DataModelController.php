@@ -7,7 +7,8 @@ use Illuminate\Routing\Controller as BaseController;
 use iProtek\Data\Models\DataModel;
 use iProtek\Data\Models\DataModelField;
 use App\Models\UserAdminPayAccount;
-use App\Helpers\ProjectMonitoring\DataFieldHelper;
+use iProtek\Data\DataFieldHelper;
+use iProtek\Core\Http\Controllers\_Common\_CommonController;
 
 
 class  DataModelController extends _CommonController
