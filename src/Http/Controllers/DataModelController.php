@@ -16,7 +16,7 @@ class  DataModelController extends _CommonController
     //
     public $guard = 'admin';
     public function index(Request $request){
-        return $this->view('iprotek_data::searches.index');
+        return $this->view('iprotek_data::manage.searches.index');
 
     }
 
