@@ -11,8 +11,9 @@ use iProtek\Data\Models\DataModelField;
 use iProtek\Data\Models\DataModelFieldValue;
 use iProtek\Data\Helpers\DataFieldHelper;
 use App\Models\UserAdminPayAccount;
+use iProtek\Core\Http\Controllers\_Common\_CommonController;
 
-class DataController extends BaseController
+class DataController extends _CommonController
 {
     //
 
