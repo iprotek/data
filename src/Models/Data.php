@@ -5,6 +5,8 @@ namespace iProtek\Data\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use iProtek\Data\Helpers\DataFieldHelper;
+
 
 class Data extends Model
 {
@@ -48,7 +50,7 @@ class Data extends Model
 
         $fields = $result->fields;
 
-        $arranged = ProjectFieldHelper::fieldsgetSub($fields, 0);
+        $arranged = DataFieldHelper::fieldsgetSub($fields, 0);
         //Arrange here
         $id->fieldList = $arranged;
 
