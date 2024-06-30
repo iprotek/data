@@ -14,7 +14,7 @@ class UpdateProjDataValue2 extends Migration
     public function up()
     {
         //
-        $table_name = 'data_model_field_values';
+        $table_name = 'data';
     
         if(Schema::hasTable($table_name)) {
 
