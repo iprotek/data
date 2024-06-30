@@ -54,7 +54,7 @@ class Data extends Model
 
         $arranged = DataFieldHelper::fieldsgetSub($fields, 0);
         //Arrange here
-        $id->fieldList = $arranged;
+        $result->fieldList = $arranged;
 
 
         return $result;
