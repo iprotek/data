@@ -8,14 +8,14 @@ use iProtek\Data\Models\DataModelFieldValue;
 
 class DataFieldHelper
 { 
-    public static function setFields($fields, ProjectDataModel $id, $parent_id , $user_pay_id ){
+    public static function setFields($fields, DataModel $id, $parent_id , $user_pay_id ){
     
         //get activated
         $activated_fields = [];
         $count = 1;
         foreach($fields as $field){
             if($field['id'] == 0){
-               $item = ProjectDataModelField::create([
+               $item = DataModelField::create([
                 "pay_created_by"=>$user_pay_id,
                 "data_model_id"=>$id->id,
                 "model_field_id"=>$field['model_field_id'],
@@ -27,7 +27,7 @@ class DataFieldHelper
             }
             else{
                //Select specific constraint
-               $item = ProjectDataModelField::where('data_model_id', $id->id)->where('model_field_id', $field['model_field_id'])->find($field['id']);
+               $item = DataModelField::where('data_model_id', $id->id)->where('model_field_id', $field['model_field_id'])->find($field['id']);
                if(!$item){
                  continue;
                }
@@ -76,7 +76,7 @@ class DataFieldHelper
     }
 
     public static function getFieldValues($data_id, $data_model_field_id){
-        return ProjectDataModelFieldValue::with(['link_data'])->where('project_data_id', $data_id)->where('data_model_field_id', $data_model_field_id)->orderBy('order_no', 'ASC')->get();
+        return DataModelFieldValue::with(['link_data'])->where('project_data_id', $data_id)->where('data_model_field_id', $data_model_field_id)->orderBy('order_no', 'ASC')->get();
     }
 
 }
