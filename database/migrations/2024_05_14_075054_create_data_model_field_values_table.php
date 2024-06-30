@@ -13,6 +13,45 @@ class CreateDataModelFieldValuesTable extends Migration
      */
     public function up()
     {
+        $table_name = 'data_model_field_values';
+    
+        if(Schema::hasTable($table_name)) {
+
+            // TARGET NAME
+                Schema::table( $table_name, function (Blueprint $table) use($table_name) {
+                    if (!Schema::hasColumn($table_name, 'parent_id'))
+                    $table->integer('parent_id')->nullable();
+                    if (!Schema::hasColumn($table_name, 'data_model_id'))
+                    $table->integer('data_model_id')->nullable();
+                    if (!Schema::hasColumn($table_name, 'model_field_id'))
+                    $table->integer('model_field_id')->nullable();
+                    if (!Schema::hasColumn($table_name, 'data_model_field_id'))
+                    $table->integer('data_model_field_id')->nullable(); 
+        
+                    if (!Schema::hasColumn($table_name, 'type'))
+                    $table->string('type'); //field, data_model, text, description
+                    if (!Schema::hasColumn($table_name, 'value_target'))
+                    $table->integer('value_target'); //1,2,3
+                    if (!Schema::hasColumn($table_name, 'value1'))
+                    $table->string('value1')->nullable();
+                    if (!Schema::hasColumn($table_name, 'value2'))
+                    $table->longText('value2')->nullable();
+                    if (!Schema::hasColumn($table_name, 'value3'))
+                    $table->integer('value3')->nullable();
+        
+                    
+                    if (!Schema::hasColumn($table_name, 'has_date'))
+                    $table->boolean('has_date')->nullable();
+                    if (!Schema::hasColumn($table_name, 'from'))
+                    $table->date('from')->nullable();
+                    if (!Schema::hasColumn($table_name, 'to'))
+                    $table->date('to')->nullable();
+                    if (!Schema::hasColumn($table_name, 'data_type'))
+                    $table->string('data_type');
+                });
+            return;
+        }
+
         Schema::create('data_model_field_values', function (Blueprint $table) {
             $table->id();
 

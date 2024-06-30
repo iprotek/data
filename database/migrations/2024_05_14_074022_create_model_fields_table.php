@@ -13,6 +13,30 @@ class CreateModelFieldsTable extends Migration
      */
     public function up()
     {
+        $table_name = 'model_fields';
+    
+        if(Schema::hasTable($table_name)) {
+
+            // TARGET NAME
+                Schema::table( $table_name, function (Blueprint $table) use($table_name) {
+                    if (!Schema::hasColumn($table_name, 'details'))
+                        $table->longText('details')->nullable();
+                    if (!Schema::hasColumn($table_name, 'data_type'))
+                        $table->string('data_type')->nullable(); // project, person, company, painter
+                    if (!Schema::hasColumn($table_name, 'json_info'))
+                        $table->longText('json_info')->nullable();
+                    if (!Schema::hasColumn($table_name, 'has_date'))
+                        $table->boolean('has_date')->nullable();
+                    if (!Schema::hasColumn($table_name, 'from'))
+                        $table->date('from')->nullable();
+                    if (!Schema::hasColumn($table_name, 'to'))
+                        $table->date('to')->nullable();
+                    if (!Schema::hasColumn($table_name, 'order_id'))
+                        $table->integer('order_id')->nullable();
+                });
+            return;
+        }
+
         Schema::create('model_fields', function (Blueprint $table) {
             $table->id();
             $table->string('name');
