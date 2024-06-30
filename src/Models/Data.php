@@ -26,7 +26,9 @@ class Data extends Model
         "data_model_type",
         "address",
         "business_type",
-        "status"
+        "status",
+        "ref_id",
+        "ref_source"
     ];
 
     public function data_model(){
