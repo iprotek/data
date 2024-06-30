@@ -28,7 +28,7 @@ class Data extends Model
     ];
 
     public function data_model(){
-        return $this->belongsTo(ProjectDataModel::class, 'data_model_id');
+        return $this->belongsTo(DataModel::class, 'data_model_id');
     }
 
 
@@ -37,12 +37,12 @@ class Data extends Model
 
         $result = null;
 
-        //ProjectDataModel
-        $dataModel = ProjectDataModel::find($this->data_model_id);
+        //DataModel
+        $dataModel = DataModel::find($this->data_model_id);
 
-        //ProjectDataModelFieldValue
+        //DataModelFieldValue
         
-        $result = ProjectDataModel::with(['fields'=>function($q){
+        $result = DataModel::with(['fields'=>function($q){
             $q->with('model_field');
         }])->find($this->data_model_id);
 

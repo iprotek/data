@@ -26,7 +26,7 @@ class DataModel extends Model
     ];
     
     public function fields(){
-        return $this->hasMany(ProjectDataModelField::class, 'data_model_id')->orderBy('order_no','ASC');
+        return $this->hasMany(DataModelField::class, 'data_model_id')->orderBy('order_no','ASC');
     }
     
 }

@@ -23,7 +23,7 @@ class DataModelField extends Model
     ];
 
     public function model_field(){
-        return $this->belongsTo(ProjectModelField::class, 'model_field_id');
+        return $this->belongsTo(ModelField::class, 'model_field_id');
     }
 
 

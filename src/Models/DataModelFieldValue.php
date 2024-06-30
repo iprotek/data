@@ -34,10 +34,10 @@ class DataModelFieldValue extends Model
     ];
 
     public function link_data(){
-        return $this->belongsTo( ProjectData::class, 'value3' );
+        return $this->belongsTo( Data::class, 'value3' );
     }
 
     public function project_data(){
-        return $this->belongsTo(ProjectData::class, 'project_data_id' );
+        return $this->belongsTo(Data::class, 'project_data_id' );
     }
 }
