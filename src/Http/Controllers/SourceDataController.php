@@ -22,6 +22,7 @@ class SourceDataController extends _CommonController
         $files = File::allFiles($modelPath);
 
         $models = [];
+        $class_names = [];
 
         foreach ($files as $file) {
             $relativePath = $file->getRelativePathname();
@@ -29,9 +30,10 @@ class SourceDataController extends _CommonController
 
             if (class_exists($class) && is_subclass_of($class, 'Illuminate\Database\Eloquent\Model')) {
                 $models[] = $class;
+                $class_names[] =  class_basename($class);
             }
         }
-        return $models;
+        return $class_names;
         // Output the list of models
         foreach ($models as $model) {
             $this->info($model);
