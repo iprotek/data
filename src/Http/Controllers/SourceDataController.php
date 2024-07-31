@@ -42,5 +42,30 @@ class SourceDataController extends _CommonController
         return 0;
     }
 
+    public function get_model_fields(Request $request){
+        try{
+            $columnList = [];
+            $class = "\\App\\Models\\".$request->model_name;
+            $model = new $class;
+            $table = $model->getTable();
+
+            // Get all columns for the model's table
+            if (Schema::hasTable($table)) {
+                $columns = Schema::getColumnListing($table);
+                foreach ($columns as $column) { 
+                    $columnList[] = $column;
+                }
+            } else {
+                
+            }
+            return $columnList;
+        }catch(\Exception $ex){
+            return [];
+        }
+
+
+
+    }
+
 
 }
