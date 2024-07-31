@@ -59,7 +59,7 @@ Route::middleware('web')->group(function(){
             });
         });
         
-        Route::get('/models', [ DataModelController::class, 'get_models' ])->name('.get-models');
+        Route::get('/models', [ SourceDataController::class, 'get_models' ])->name('.get-models');
       });
 
     });
