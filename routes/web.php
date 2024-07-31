@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use iProtek\Data\Http\Controllers\DataModelController;
 use iProtek\Data\Http\Controllers\DataController;
 use iProtek\Data\Http\Controllers\ModelFieldController;
+use iProtek\Data\Http\Controllers\SourceDataController;
 
 //Route::prefix('sms-sender')->name('sms-sender')->group(function(){
   //  Route::get('/', [SmsController::class, 'index'])->name('.index');
@@ -57,7 +58,8 @@ Route::middleware('web')->group(function(){
                 Route::delete('/{id}', [ DataModelController::class, 'remove' ])->name('.remove');
             });
         });
-
+        
+        Route::get('/models', [ DataModelController::class, 'get_models' ])->name('.get-models');
       });
 
     });
