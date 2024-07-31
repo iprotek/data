@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Routing\Controller as BaseController;  
 use iProtek\Core\Http\Controllers\_Common\_CommonController;
+use Illuminate\Support\Facades\Schema;
 
 class SourceDataController extends _CommonController
 {
