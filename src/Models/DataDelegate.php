@@ -18,6 +18,7 @@ class DataDelegate extends Model
         "source_type",
         "created_by",
         "updated_by",
-        "deleted_by"
+        "deleted_by",
+        "order_id"
     ];
 }
