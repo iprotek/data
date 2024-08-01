@@ -65,8 +65,10 @@ Route::middleware('web')->group(function(){
 
     //
     Route::prefix('iprotek-data')->group(function(){
+
       Route::get('/models', [ SourceDataController::class, 'get_models' ])->name('.get-models');
       Route::get('/model-fields', [ SourceDataController::class, 'get_model_fields' ])->name('.get-models');
+      
     });
 
   });
