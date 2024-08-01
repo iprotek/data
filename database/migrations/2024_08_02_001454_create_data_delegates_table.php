@@ -23,6 +23,7 @@ class CreateDataDelegatesTable extends Migration
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->integer('deleted_by')->nullable();
+            $table->integer('order_id');
             $table->softDeletes();
             $table->timestamps();
         });
