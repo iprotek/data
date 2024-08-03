@@ -13,7 +13,7 @@ class DataDelegateHelper
     public static function get_data_delegate($source_id, $source_name, $key_name, $data_delegate_id = NULL){
 
         //GET FROM MODELS
-        $datas =  DataDelegate::where('source_id', $source_id)->where('source_name', $source_name);
+        $datas =  DataDelegate::where('source_id', $source_id)->where('source_name', $source_name)->where('is_show', 1);
 
         if($data_delegate_id){
             $datas->where('id', $data_delegate_id);
