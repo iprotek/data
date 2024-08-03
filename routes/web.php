@@ -79,7 +79,8 @@ Route::middleware('web')->group(function(){
 
       //GET VALUES
       Route::get('delegate-values', [DataDelegateController::class, 'get_delegate_values'])->name('get-delegate-values');
-
+      //update_delegate_values
+      Route::put('update-delegate-values', [DataDelegateController::class, 'update_delegate_values'])->name('update-delegate-values');
 
     });
 

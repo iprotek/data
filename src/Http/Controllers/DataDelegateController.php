@@ -5,6 +5,7 @@ namespace iProtek\Data\Http\Controllers;
 use Illuminate\Http\Request;
 use iProtek\Core\Http\Controllers\_Common\_CommonController;
 use iProtek\Data\Models\DataDelegate;
+use iProtek\Data\Models\DataDelegateInputValues;
 
 class DataDelegateController extends _CommonController
 {
@@ -108,6 +109,45 @@ class DataDelegateController extends _CommonController
             return \iProtek\Data\Helpers\DataDelegateHelper::get_data_delegate($source_id, $source_name, $key_name);
         else 
             return \iProtek\Data\Helpers\DataDelegateHelper::get_data_delegate($source_id, $source_name, $key_name, $delegate_id);
+    }
+
+    public function update_delegate_values(Request $request){
+        
+        $this->validate($request,[
+            //"source_id"=>"required",
+            //"source_name"=>"required",
+            "key_name"=>"required"
+        ]); 
+        $user = auth()->user();
+        $delegate_items = $request->update_delegate_values;
+
+        foreach($delegate_items as $item){  
+            $getVal = DataDelegateInputValues::where( 'data_delegate_id', $item['id'])->where('key_name', $request->key_name)->first();
+            if($getVal){
+                $getVal->input_value = $item['value'];
+                if($getVal->isDirty()){
+                    $getVal->updated_by = $user->id;
+                    $getVal->save();
+                }
+            }
+            else{
+                if($item['value']){
+                    DataDelegateInputValues::create([
+                        "data_delegate_id"=>$item['id'],
+                        "key_name"=>$request->key_name,
+                        "input_value"=>$item['value'],
+                        "created_by"=>$user->id
+                    ]);
+                }
+            }
+
+        }
+
+
+        return [
+            "status"=>1,
+            "message"=>"Done updating."
+        ];
     }
 
 }
