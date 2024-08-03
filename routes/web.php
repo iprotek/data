@@ -5,6 +5,9 @@ use iProtek\Data\Http\Controllers\DataModelController;
 use iProtek\Data\Http\Controllers\DataController;
 use iProtek\Data\Http\Controllers\ModelFieldController;
 use iProtek\Data\Http\Controllers\SourceDataController;
+use iProtek\Data\Http\Controllers\DataDelegateController;
+use iProtek\Data\Http\Controllers\DataDelegateInputValuesController;
+use iProtek\Data\Http\Controllers\DataDelegateInputValueTransactionsController;
 
 //Route::prefix('sms-sender')->name('sms-sender')->group(function(){
   //  Route::get('/', [SmsController::class, 'index'])->name('.index');
@@ -13,7 +16,7 @@ use iProtek\Data\Http\Controllers\SourceDataController;
 Route::middleware('web')->group(function(){
   
     
-  Route::prefix('manage')->name('manage')->group(function(){
+  Route::prefix('manage')->name('manage')->middleware(['auth'])->group(function(){
     
     Route::middleware(['auth_web_pay_checker', 'pay.account'])->group(function(){
 
@@ -57,8 +60,8 @@ Route::middleware('web')->group(function(){
                 Route::put('/update/{id}', [ DataModelController::class, 'update' ])->name('.update');
                 Route::delete('/{id}', [ DataModelController::class, 'remove' ])->name('.remove');
             });
-        });
-        
+        }); 
+
       });
 
     });
@@ -69,6 +72,12 @@ Route::middleware('web')->group(function(){
       Route::get('/models', [ SourceDataController::class, 'get_models' ])->name('.get-models');
       Route::get('/model-fields', [ SourceDataController::class, 'get_model_fields' ])->name('.get-models');
       
+      //DATA DELEGATE
+      Route::get('get-delegates', [DataDelegateController::class, 'get_delegates'])->name('get-delegates');
+      Route::post('add-delegate', [DataDelegateController::class, 'add_delegate'])->name('add-delegates');
+      Route::put('update-delegate/{id}', [DataDelegateController::class, 'edit_delegate'])->name('add-delegates');
+
+
     });
 
   });

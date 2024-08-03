@@ -19,6 +19,7 @@ class DataDelegate extends Model
         "created_by",
         "updated_by",
         "deleted_by",
-        "order_id"
+        "order_id",
+        "is_show"
     ];
 }
