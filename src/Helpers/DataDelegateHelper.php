@@ -29,15 +29,65 @@ class DataDelegateHelper
 
         $delegates = $datas->get();
 
-        //GET DATA FROM MODELS
+        foreach($delegates as $del){
+            //GET DATA FROM MODELS
+            if($del->source_type == 'model'){
+
+                $field_info = json_decode($del->field_info);
+
+                if($field_info->source_instance == 'self'){
+                    $model_info = "\\App\\Models\\".$field_info->model_selected;
+                    $model = new $model_info;
+                    $field_name = $field_info->field_selected;
+                    if($model){   
+                        $res = $model->find($del->source_id);
+                        if($res){
+                            $results[] = [
+                                "id"=>$del->id,
+                                "key_name"=>$key_name,
+                                "placeholder"=>$del->placeholder,
+                                "source_type"=>$del->source_type,
+                                "value"=>$res->$field_name
+                            ];
+                            continue;
+                        }
+                    }
+                    $results[] = [
+                        "id"=>$del->id,
+                        "key_name"=>$key_name,
+                        "placeholder"=>$del->placeholder,
+                        "source_type"=>$del->source_type,
+                        "value"=>""
+                    ]; 
+                }
+            }
         
-        //GET DATA FROM VARIABLE
+            //GET DATA FROM VARIABLE
+            else  if($del->source_type == 'model'){
+                $results[] = [
+                    "id"=>$del->id,
+                    "key_name"=>$key_name,
+                    "placeholder"=>$del->placeholder,
+                    "source_type"=>$del->source_type,
+                    "value"=>""
+                ]; 
+            }
 
-        //GET DATA FROM INPUTS
+            //GET DATA FROM INPUTS
+            else  if($del->source_type == 'input'){
+                $results[] = [
+                    "id"=>$del->id,
+                    "key_name"=>$key_name,
+                    "placeholder"=>$del->placeholder,
+                    "source_type"=>$del->source_type,
+                    "field_info"=> json_decode( $del->field_info ),
+                    "value"=>""
+                ]; 
+
+            }
 
 
-
-
+        }
         return $results;
     }
 

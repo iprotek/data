@@ -91,4 +91,23 @@ class DataDelegateController extends _CommonController
             "data"=>$id
         ];
     }
+
+    public function get_delegate_values(Request $request){
+        
+        $this->validate($request,[
+            "source_id"=>"required",
+            "source_name"=>"required",
+            "key_name"=>"required"
+        ]); 
+
+        $source_id = $request->source_id;
+        $source_name = $request->source_name;
+        $key_name = $request->key_name;
+        $delegate_id = $request->delegate_id;
+        if($delegate_id)
+            return \iProtek\Data\Helpers\DataDelegateHelper::get_data_delegate($source_id, $source_name, $key_name);
+        else 
+            return \iProtek\Data\Helpers\DataDelegateHelper::get_data_delegate($source_id, $source_name, $key_name, $delegate_id);
+    }
+
 }
