@@ -6,23 +6,27 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ContentMetaData extends Model
+class ContentMetaDataTrack extends Model
 {
     use HasFactory, SoftDeletes;
-    public $fillable = [
 
+    public $fillable = [
         "group_id",
         "pay_created_by",
         "pay_updated_by",
         "pay_deleted_by",
 
-        "source",
-        "source_id",
-        "meta_data"
-        
+        "content_meta_data_id",
+        "user_admin_id",
+        "link_source_name",
+        "link_ref"
     ];
-
+    
+    /*
     public $casts = [
-        "meta_data"=>"json"
+        "created_at" => "datetime:Y-m-d H:i",
+        "updated_at" => "datetime:Y-m-d H:i"
     ];
+    */
+
 }

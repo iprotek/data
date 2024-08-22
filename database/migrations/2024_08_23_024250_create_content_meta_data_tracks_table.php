@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContentMetaDataTable extends Migration
+class CreateContentMetaDataTracksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateContentMetaDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('content_meta_data', function (Blueprint $table) {
+        Schema::create('content_meta_data_tracks', function (Blueprint $table) {
             $table->id();
 
             $table->bigInteger('group_id')->nullable(); 
@@ -23,10 +23,10 @@ class CreateContentMetaDataTable extends Migration
             $table->softDeletes(); 
             $table->timestamps();
 
-            $table->string('source');
-            $table->integer('source_id');
-            $table->longText('meta_data');
-            
+            $table->integer('content_meta_data_id');
+            $table->bigInteger('user_admin_id')->nullable(); 
+            $table->string('link_source_name')->nullable(); //google, facebook, twitter
+            $table->string('link_ref')->nullable();
         });
     }
 
@@ -37,6 +37,6 @@ class CreateContentMetaDataTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('content_meta_data');
+        Schema::dropIfExists('content_meta_data_tracks');
     }
 }

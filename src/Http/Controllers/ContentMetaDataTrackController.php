@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use iProtek\Core\Http\Controllers\_Common\_CommonController;
 use iProtek\Core\Helpers\PayModelHelper;
 
-class ContentMetaDataController extends Controller
+class ContentMetaDataTrackController extends Controller
 {
     //
 }
