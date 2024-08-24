@@ -27,7 +27,7 @@ class ContentMetaData extends Model
         "meta_data"=>"json"
     ];
 
-    public function profile_image(){
-        return $this->hasMany(FileUpload::class, );
+    public function meta_image(){
+        return $this->hasMany(FileUpload::class, 'group_id', 'group_id' )->where('target_name','meta-data-image');
     }
 }
