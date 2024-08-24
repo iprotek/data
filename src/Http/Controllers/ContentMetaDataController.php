@@ -8,31 +8,49 @@ use Illuminate\Routing\Controller as BaseController;
 use iProtek\Core\Helpers\PayModelHelper;
 use iProtek\Data\Models\ContentMetaData; 
 
-class ContentMetaDataController extends BaseController
+class ContentMetaDataController extends _CommonController
 {
     //
     protected $guard = 'admin';
 
-    public function get_info(Request $request, $id){
-        /*
-        $meta = ContentMetaData::find($id);
-        if(!$meta)
-            abort(403, 'Not Found');
+    public function get_info(Request $request){ 
 
-        //*/
-        $source = $request->souce;
-        
-        $id = PayModelHelper::get_own(ContentMetaData::class, $request, [
-            "source"=>$source
-        ])->first();
+        $meta_ref = $request->group_id."-".$request->id;
+        $data = PayModelHelper::get_own(ContentMetaData::class, $request)->where('meta_ref', $meta_ref)->with(['meta_image'])->first();
+        if(!$data){
+            return ContentMetaData::where('meta_ref','LIKE','%-'.$request->id)->with(['meta_image'])->first();
+        }
+        return $data;
 
-
-        return $id;
     }
 
     public function add(Request $request){
-
-        return ["status"=>1, "message"=>"Successfully added MetaData"];
+        $meta = null;
+        $this->validate($request, [
+            "source_id"=>"required",
+            "source"=>"required",
+            "title"=>"required|min:10, max:50",
+            "description"=>"required|max:130"
+        ]);
+        $meta_ref = $request->group_id."-".$request->source_id."-".$request->source;
+        
+        $meta =  PayModelHelper::get_own(ContentMetaData::class, $request)->where(['meta_ref'=> $meta_ref,"source_id"=>$request->source_id, "source"=>$request->source ])->first();
+        if(!$meta){
+            $meta = PayModelHelper::create_own(ContentMetaData::class, $request, [
+                "source"=>$request->source,
+                "source_id"=>$request->source_id,
+                "meta_data"=>$request->meta_data,
+                "meta_ref"=>$request->group_id."-".$request->source_id."-".$request->source
+            ]);
+            return ["status"=>1, "message"=>"Successfully added MetaData", "data"=> $meta];
+        }
+        else{
+            //$meta->meta_data = $request->meta_data;
+            PayModelHelper::update_own($meta, $request, [
+                "meta_data"=>$request->meta_data
+            ]);
+            return ["status"=>1, "message"=>"Successfully updated MetaData", "data"=> $meta];
+        } 
     }
 
     public function update(Request $request){
@@ -41,6 +59,12 @@ class ContentMetaDataController extends BaseController
     }
 
     public function remove(Request $request){
+
+        $meta_ref = $request->group_id."-".$request->id;
+        $data = PayModelHelper::get_own(ContentMetaData::class, $request)->where('meta_ref', $meta_ref);
+        if($data){
+            PayModelHelper::delete($data);
+        }
 
         return ["status"=>1, "message"=>"Successfully removed MetaData"];
     }

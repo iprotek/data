@@ -26,6 +26,7 @@ class CreateContentMetaDataTable extends Migration
             $table->string('source');
             $table->integer('source_id');
             $table->longText('meta_data');
+            $table->string('meta_ref');
             
         });
     }

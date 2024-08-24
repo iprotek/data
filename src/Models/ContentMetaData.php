@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use iProtek\Core\Models\FileUpload;
+use Illuminate\Support\Facades\Log;
 
 class ContentMetaData extends Model
 {
     use HasFactory, SoftDeletes;
-    public $fillable = [
+    protected $fillable = [
 
         "group_id",
         "pay_created_by",
@@ -19,15 +20,19 @@ class ContentMetaData extends Model
 
         "source",
         "source_id",
-        "meta_data"
+        "meta_data",
+        "meta_ref"
         
     ];
 
-    public $casts = [
+    protected $casts = [
         "meta_data"=>"json"
     ];
 
+
     public function meta_image(){
-        return $this->hasMany(FileUpload::class, 'group_id', 'group_id' )->where('target_name','meta-data-image');
+        //$gg =  //var_dump(json_encode($this));
+        
+        return $this->hasMany(FileUpload::class, 'target_id','meta_ref')->where('target_name', 'meta-data-image')->orderBy('is_default', 'DESC');
     }
 }
