@@ -33,6 +33,6 @@ class ContentMetaData extends Model
     public function meta_image(){
         //$gg =  //var_dump(json_encode($this));
         
-        return $this->hasMany(FileUpload::class, 'target_id','meta_ref')->where('target_name', 'meta-data-image')->orderBy('is_default', 'DESC');
+        return $this->hasOne(FileUpload::class, 'target_id','meta_ref')->where('target_name', 'meta-data-image')->orderBy('is_default', 'DESC');
     }
 }

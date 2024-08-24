@@ -7,6 +7,7 @@ use iProtek\Core\Http\Controllers\_Common\_CommonController;
 use Illuminate\Routing\Controller as BaseController;  
 use iProtek\Core\Helpers\PayModelHelper;
 use iProtek\Data\Models\ContentMetaData; 
+use iProtek\Data\Helpers\MetaDataHelper; 
 
 class ContentMetaDataController extends _CommonController
 {
@@ -14,13 +15,12 @@ class ContentMetaDataController extends _CommonController
     protected $guard = 'admin';
 
     public function get_info(Request $request){ 
+        $this->validate($request, [
+            "source"=>"required"
+        ]);
 
-        $meta_ref = $request->group_id."-".$request->id;
-        $data = PayModelHelper::get_own(ContentMetaData::class, $request)->where('meta_ref', $meta_ref)->with(['meta_image'])->first();
-        if(!$data){
-            return ContentMetaData::where('meta_ref','LIKE','%-'.$request->id)->with(['meta_image'])->first();
-        }
-        return $data;
+        //return \iProtek\Data\Helpers\MetaDataHelper::getDefaultMetaByUser("sample", 1, 0, "facebook", "");
+        return \iProtek\Data\Helpers\MetaDataHelper::getDefaultMetaData($request->source, $request->id, $request->group_id); 
 
     }
 
