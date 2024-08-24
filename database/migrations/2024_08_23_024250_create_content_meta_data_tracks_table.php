@@ -26,7 +26,7 @@ class CreateContentMetaDataTracksTable extends Migration
             $table->integer('content_meta_data_id');
             $table->bigInteger('user_admin_id')->nullable(); 
             $table->string('link_source_name')->nullable(); //google, facebook, twitter
-            $table->string('link_ref')->nullable();
+            $table->text('link_ref')->nullable();
         });
     }
 
