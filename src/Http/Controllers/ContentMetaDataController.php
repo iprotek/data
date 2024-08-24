@@ -20,7 +20,13 @@ class ContentMetaDataController extends _CommonController
         ]);
 
         //return \iProtek\Data\Helpers\MetaDataHelper::getDefaultMetaByUser("sample", 1, 0, "facebook", "");
-        return \iProtek\Data\Helpers\MetaDataHelper::getDefaultMetaData($request->source, $request->id, $request->group_id); 
+        $result = \iProtek\Data\Helpers\MetaDataHelper::getDefaultMetaData($request->source, $request->id, $request->group_id); 
+
+
+        if($result)
+            return $result;
+
+        return ["id"=>0];
 
     }
 
