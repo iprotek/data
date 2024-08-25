@@ -6,6 +6,7 @@ use iProtek\Data\Models\ContentMetaData;
 use iProtek\Data\Models\ContentMetaDataTrack;
 use iProtek\Core\Models\FileUpload;
 use iProtek\Core\Models\UserAdminPayAccount;
+use iProtek\Core\Models\UserAdmin;
 
 class MetaDataHelper
 { 
@@ -52,12 +53,22 @@ class MetaDataHelper
         $description = "";
         $keywords = "";
         $image_url = "";
+        $author_name = "";
         if($result && $result->meta_data){
             $meta_data = json_decode( json_encode($result->meta_data) );
             if($meta_data){
                 $title = $meta_data->title;
                 $description = $meta_data->description;
                 $keywords = $meta_data->keywords;
+            }
+
+            $author_info = UserAdminPayAccount::where('pay_app_user_account_id', $result->pay_created_by)->first();
+            if($author_info){
+                $user_info = UserAdmin::find($author_info->user_admin_id);
+                if($user_info){
+                    $author_name = $user_info->name;
+                }
+
             }
         }
 
@@ -70,7 +81,8 @@ class MetaDataHelper
             "title"=>$title,
             "description"=>$description,
             "keywords"=>$keywords,
-            "image_url"=>$image_url
+            "image_url"=>$image_url,
+            "author"=>$author_name
         ];
     }
 
