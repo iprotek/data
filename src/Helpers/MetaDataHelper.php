@@ -55,6 +55,7 @@ class MetaDataHelper
         $image_url = "";
         $author_name = "";
         if($result && $result->meta_data){
+            $id = $result->id;
             $meta_data = json_decode( json_encode($result->meta_data) );
             if($meta_data){
                 $title = $meta_data->title;
