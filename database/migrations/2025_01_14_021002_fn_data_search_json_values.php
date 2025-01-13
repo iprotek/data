@@ -49,10 +49,10 @@ BEGIN
         ,']') INTO  _RESULTVALUE 
 	FROM 
 		data_model_field_values AS A,
-        model_fields AS B
+        ( SELECT B1.name, B2.* FROM model_fields AS B1, data_model_fields AS B2 WHERE B1.id = B2.model_field_id AND B2.data_model_id = _ModelID  )AS B
     WHERE 
 		A.data_model_field_id = B.id AND
-		data_model_id = _ModelID AND
+		B.data_model_id = _ModelID AND
         project_data_id = _DataID;
     
     
@@ -69,6 +69,7 @@ BEGIN
 	DECLARE _ModelID INT DEFAULT 0;
     DECLARE _DataID INT DEFAULT 0;
     DECLARE _ModelFieldID INT DEFAULT 0;
+    DECLARE _DataModelFieldID INT DEFAULT 0;
     DECLARE _RESULTVALUE TEXT;
     
     
@@ -88,6 +89,12 @@ BEGIN
     ## MODEL FIELD
     SELECT id INTO _ModelFieldID FROM model_fields WHERE `name` = _field_name LIMIT 1;
     IF(_ModelFieldID IS NULL OR _ModelFieldID <= 0 )THEN
+		RETURN '';
+    END IF;
+    
+    ## DATA MODEL FIELD
+    SELECT id INTO _DataModelFieldID FROM data_model_fields WHERE model_field_id = _ModelFieldID AND data_model_id = _ModelID AND parent_id = 0 LIMIT 1;
+    IF(_DataModelFieldID IS NULL OR _DataModelFieldID <= 0 )THEN
 		RETURN '';
     END IF;
     
