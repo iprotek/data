@@ -19,7 +19,7 @@
   <div id="main-content">
     <?php
       $user_id = auth()->user()->id;
-      $user_admin = \App\Models\UserAdminPayAccount::where('user_admin_id', $user_id)->first();
+      $user_admin = \iProtek\Core\Models\UserAdminPayAccount::where('user_admin_id', $user_id)->first();
       $group_id = 0;
       if($user_admin){
         $group_id = $user_admin->own_proxy_group_id;

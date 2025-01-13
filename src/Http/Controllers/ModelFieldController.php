@@ -5,7 +5,7 @@ namespace iProtek\Data\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;  
 use iProtek\Data\Models\ModelField;
-use App\Models\UserAdminPayAccount;
+use iProtek\Core\Models\UserAdminPayAccount;
 use iProtek\Data\Models\DataModelFieldValue;
 use iProtek\Core\Http\Controllers\_Common\_CommonController; 
 
