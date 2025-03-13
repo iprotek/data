@@ -67,20 +67,20 @@ Route::middleware('web')->group(function(){
     });
 
     //
-    Route::prefix('iprotek-data')->group(function(){
+    Route::prefix('iprotek-data')->name('.iprotek-data')->group(function(){
 
       Route::get('/models', [ SourceDataController::class, 'get_models' ])->name('.get-models');
       //Route::get('/model-fields', [ SourceDataController::class, 'get_model_fields' ])->name('.get-models');
       
       //DATA DELEGATE
-      Route::get('get-delegates', [DataDelegateController::class, 'get_delegates'])->name('get-delegates');
-      Route::post('add-delegate', [DataDelegateController::class, 'add_delegate'])->name('add-delegates');
-      Route::put('update-delegate/{id}', [DataDelegateController::class, 'edit_delegate'])->name('add-delegates');
+      Route::get('get-delegates', [DataDelegateController::class, 'get_delegates'])->name('.get-delegates');
+      Route::post('add-delegate', [DataDelegateController::class, 'add_delegate'])->name('.add-delegates');
+      Route::put('update-delegate/{id}', [DataDelegateController::class, 'edit_delegate'])->name('.update-delegates');
 
       //GET VALUES
-      Route::get('delegate-values', [DataDelegateController::class, 'get_delegate_values'])->name('get-delegate-values');
+      Route::get('delegate-values', [DataDelegateController::class, 'get_delegate_values'])->name('.get-delegate-values');
       //update_delegate_values
-      Route::put('update-delegate-values', [DataDelegateController::class, 'update_delegate_values'])->name('update-delegate-values');
+      Route::put('update-delegate-values', [DataDelegateController::class, 'update_delegate_values'])->name('.update-delegate-values');
 
     });
 
