@@ -35,7 +35,15 @@ class MetaDataHelper
         $proxy_group_id = null;
         $user_admin = null;
         if($user_admin_id){
-            $user_admin = UserAdminPayAccount::where('user_admin_id', $user_admin_id)->first();
+            
+            $session_id = session()->getId();
+
+            if($session_id)
+                $user_admin = \iProtek\Core\Models\UserAdminPayAccount::where(['user_admin_id'=>$user_admin_id, 'browser_session_id'=>$session_id])->first();
+
+            if(!$user_admin)
+                $user_admin = UserAdminPayAccount::where('user_admin_id', $user_admin_id)->first();
+
             if($user_admin){
                 $proxy_group_id = $user_admin->own_proxy_group_id;
             }

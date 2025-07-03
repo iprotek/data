@@ -148,7 +148,14 @@ class DataController extends _CommonController
         }
 
         $user_id = auth()->user()->id;
-        $user_admin = UserAdminPayAccount::where('user_admin_id',$user_id)->first();
+        $session_id = session()->getId();
+        $user_admin = null;
+        if($session_id)
+            $user_admin = \iProtek\Core\Models\UserAdminPayAccount::where(['user_admin_id'=>$user_id, 'browser_session_id'=>$session_id])->first();
+ 
+        if(!$user_admin)
+            $user_admin = UserAdminPayAccount::where('user_admin_id',$user_id)->first();
+
         if(!$user_admin){
             return ["status"=>0, "message"=>"User Admin not found."];
         } 
@@ -173,7 +180,14 @@ class DataController extends _CommonController
         }
         
         $user_id = auth()->user()->id;
-        $user_admin = UserAdminPayAccount::where('user_admin_id',$user_id)->first();
+        $session_id = session()->getId();
+        $user_admin = null;
+        if($session_id)
+            $user_admin = \iProtek\Core\Models\UserAdminPayAccount::where(['user_admin_id'=>$user_id, 'browser_session_id'=>$session_id])->first();
+ 
+        if(!$user_admin)
+            $user_admin = UserAdminPayAccount::where('user_admin_id',$user_id)->first();
+        
         if(!$user_admin){
             return ["status"=>0, "message"=>"User Admin not found."];
         } 
