@@ -16,7 +16,7 @@ use iProtek\Data\Http\Controllers\DataDelegateInputValueTransactionsController;
 Route::middleware('web')->group(function(){
   
     
-  Route::prefix('manage')->name('manage')->middleware(['auth'])->group(function(){
+  Route::prefix('manage')->name('manage')->middleware(['auth:admin'])->group(function(){
     
     Route::middleware(['auth_web_pay_checker', 'pay.account'])->group(function(){
 
