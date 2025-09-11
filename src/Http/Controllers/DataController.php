@@ -33,8 +33,12 @@ class DataController extends _CommonController
         return $projects;
     }
 
-    public function get(Request $request, Data $id){
+    public function get(Request $request){
         
+        $id = Data::find($request->id);
+        if(!$id){
+            return null;
+        }
         
         $result = DataModel::with(['fields'=>function($q){
             $q->with('model_field');//->select('*', \DB::raw(" '[]' as data_values "));
