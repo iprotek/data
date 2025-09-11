@@ -1,29 +1,22 @@
 <?php
 
 use Illuminate\Support\Facades\Route; 
+use iProtek\Core\Http\Controllers\Manage\FileUploadController; 
+use iProtek\Core\Http\Controllers\AppVariableController;
 use iProtek\Data\Http\Controllers\DataModelController;
 use iProtek\Data\Http\Controllers\DataController;
 use iProtek\Data\Http\Controllers\ModelFieldController;
-use iProtek\Data\Http\Controllers\SourceDataController;
-use iProtek\Data\Http\Controllers\DataDelegateController;
-use iProtek\Data\Http\Controllers\DataDelegateInputValuesController;
-use iProtek\Data\Http\Controllers\DataDelegateInputValueTransactionsController;
-
-//Route::prefix('sms-sender')->name('sms-sender')->group(function(){
-  //  Route::get('/', [SmsController::class, 'index'])->name('.index');
-//});
-
-Route::middleware('web')->group(function(){
-  
+ 
+Route::prefix('api')->middleware(['api'])->group(function(){
     
-  Route::prefix('manage')->name('manage')->middleware(['auth:admin'])->group(function(){
-    
-    Route::middleware(['auth_web_pay_checker', 'pay.account'])->group(function(){
-
+    Route::prefix('group/{group_id}')->middleware(['pay.api'])->name('api')->group(function(){
+        
+        //FILE UPLOADS
+        //Route::prefix('data')
+        
       Route::prefix('iprotek-data')->group(function(){
         Route::prefix('searches')->name('.searches')->group(function(){
-            Route::get('/',  [ DataModelController::class, 'index' ])->name('.index'); 
-            //Route::get('/pay-accounts',  [ DataController::class, 'pay_accounts' ])->name('.pay-accounts'); 
+            Route::get('/',  [ DataModelController::class, 'index' ])->name('.index');
             Route::prefix('data')->name('.data')->group(function(){
                 Route::post('/add', [  DataController::class, 'add' ])->name('.add');
                 Route::put('/update/{id}', [ DataController::class, 'update' ])->name('.update');
@@ -63,30 +56,9 @@ Route::middleware('web')->group(function(){
         }); 
 
       });
+        
 
     });
 
-    //
-    Route::prefix('iprotek-data')->name('.iprotek-data')->group(function(){
-
-      Route::get('/models', [ SourceDataController::class, 'get_models' ])->name('.get-models');
-      //Route::get('/model-fields', [ SourceDataController::class, 'get_model_fields' ])->name('.get-models');
-      
-      //DATA DELEGATE
-      Route::get('get-delegates', [DataDelegateController::class, 'get_delegates'])->name('.get-delegates');
-      Route::post('add-delegate', [DataDelegateController::class, 'add_delegate'])->name('.add-delegates');
-      Route::put('update-delegate/{id}', [DataDelegateController::class, 'edit_delegate'])->name('.update-delegates');
-
-      //GET VALUES
-      Route::get('delegate-values', [DataDelegateController::class, 'get_delegate_values'])->name('.get-delegate-values');
-      //update_delegate_values
-      Route::put('update-delegate-values', [DataDelegateController::class, 'update_delegate_values'])->name('.update-delegate-values');
-
-    });
-
-  });
-
+    
 });
-
-
-include(__DIR__.'/api.php');
