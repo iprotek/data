@@ -17,7 +17,14 @@ class DataController extends _CommonController
 {
     //
 
-    public function contact_projects(Request $request, Data $id){
+    public function contact_projects(Request $request){
+
+        
+        $id = Data::find($request->id);
+        if(!$id){
+            return [];
+        }
+
         if($id->data_model_type == 'project')
             return [];
         $results = DataModelFieldValue::where('value3', $id->id)->select('project_data_id')->groupBy('project_data_id')->get()->pluck('project_data_id')->toArray();
@@ -171,7 +178,14 @@ class DataController extends _CommonController
         return ["status"=>1, "message"=>"Successfully Added", "data"=>$Data];
     }
 
-    public function update(Request $request, Data $id){
+    public function update(Request $request){
+
+        
+        $id = Data::find($request->id);
+        if(!$id){
+            return ["status"=>0, "message"=>"Data id not found!"];
+        }
+
 
         //Check if already exists by name
         $exists = Data::where('name', $request->name)->whereRaw(" id <> ?",[$id->id])->first();
@@ -216,7 +230,6 @@ class DataController extends _CommonController
         $id = DataModelField::find($request->id);
         if(!$id){
             return ["status"=>0, "message"=>"Model Field id not found!"];
-
         }
 
         $modelField = ModelField::find($id->model_field_id);
