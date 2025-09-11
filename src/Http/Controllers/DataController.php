@@ -207,12 +207,17 @@ class DataController extends _CommonController
     }
 
     
-    public function data_value(Request $request, DataModelField $id){
+    public function data_value(Request $request){
         
         $this->validate($request, [
             "data_id"  =>  "required",
             //"data_type"=>"required",
         ]);
+        $id = DataModelField::find($request->id);
+        if(!$id){
+            return ["status"=>0, "message"=>"Model Field id not found!"];
+
+        }
 
         $modelField = ModelField::find($id->model_field_id);
         if(!$modelField){
