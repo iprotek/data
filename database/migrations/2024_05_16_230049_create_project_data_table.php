@@ -39,6 +39,10 @@ class CreateProjectDataTable extends Migration
                     $table->string('status')->nullable();
                     if (!Schema::hasColumn($table_name, 'deleted_at'))
                     $table->softDeletes();
+                    if (!Schema::hasColumn($table_name, 'ref_id'))
+                    $table->bigInteger('ref_id')->nullable();
+                    if (!Schema::hasColumn($table_name, 'ref_source'))
+                    $table->string('ref_source')->nullable();
                 });
             return;
         }
@@ -60,6 +64,8 @@ class CreateProjectDataTable extends Migration
             $table->text('address')->nullable();
             $table->string('business_type')->nullable();
             $table->string('status')->nullable();
+            $table->bigInteger('ref_id')->nullable();
+            $table->string('ref_source')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
