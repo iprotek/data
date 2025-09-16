@@ -28,10 +28,11 @@ class UpdateProjDataValue2 extends Migration
             return;
         }
         //Schema::create('data', function (Blueprint $table) {
-        Schema::table('data', function (Blueprint $table) { 
-            $table->bigInteger('ref_id')->nullable();
-            $table->string('ref_source')->nullable();
-        });
+        //Schema::create('data', function (Blueprint $table) {
+        //    $table->id();
+        //    $table->bigInteger('ref_id')->nullable();
+        //    $table->string('ref_source')->nullable();
+        //});
     }
 
     /**
