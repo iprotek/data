@@ -9,56 +9,161 @@ use iProtek\Data\Http\Controllers\ModelFieldController;
  
 Route::prefix('api')->middleware(['api'])->group(function(){
     
-    Route::prefix('group/{group_id}')->middleware(['pay.api', 'policy.control'])->name('api')->group(function(){
-        
-        //FILE UPLOADS
-        //Route::prefix('data')
+    Route::prefix('group/{group_id}')->middleware(['pay.api', 'policy.control'])->name('api.data-model')->group(function(){
         
       Route::prefix('iprotek-data')->group(function(){
         Route::prefix('searches')->name('.searches')->group(function(){
-            Route::get('/',  [ DataModelController::class, 'index' ])->name('.index');
-            Route::prefix('data')->name('.data')->group(function(){
-                Route::post('/add', [  DataController::class, 'add' ])->name('.add');
-                Route::put('/update/{id}', [ DataController::class, 'update' ])->name('.update');
-                Route::get('/list', [ DataController::class, 'list' ])->name('.list');
-                Route::get('/get/{id}',  [ DataController::class, 'get' ])->name('.get'); 
-                Route::get('/list-selection', [ DataController::class, 'list_selection' ])->name('.list-selection');
-                Route::get('/contact-projects/{id}', [ DataController::class, 'contact_projects' ])->name('.contact-projects');
-                Route::post('/name-check', [ DataController::class, 'name_check' ])->name('.name-check');
-                
-                Route::post('/add-to-list', [ DataController::class, 'add_to_list' ])->name('.add-to-list');
+            
+            Route::get('/',  [ 
+                "uses"=>[DataModelController::class, 'index'],
+                "description"=>"Data model index page",
+                "is_visible"=>true,
+                "is_allow"=>false
+            ])->name('.index');
 
-                Route::post('/data-value/{id}', [ DataController::class, 'data_value' ])->name('.data-value');
+            Route::prefix('data')->name('.data')->group(function(){
+                Route::post('/add', [ 
+                    "uses"=>[ DataController::class, 'add'],
+                    "description"=>"Add new data record",
+                    "is_visible"=>false,
+                    "is_allow"=>true
+                ])->name('.add');
+                Route::put('/update/{id}', [ 
+                    "uses"=>[ DataController::class, 'update'],
+                    "description"=>"Update existing data record",
+                    "is_visible"=>false,
+                    "is_allow"=>true
+                ])->name('.update');
+                Route::get('/list', [ 
+                    "uses"=>[ DataController::class, 'list'],
+                    "description"=>"Get list of data records",
+                    "is_visible"=>false,
+                    "is_allow"=>true
+                ])->name('.list');
+                Route::get('/get/{id}',  [ 
+                    "uses"=>[ DataController::class, 'get'],
+                    "description"=>"Get specific data record",
+                    "is_visible"=>false,
+                    "is_allow"=>true
+                ])->name('.get'); 
+                Route::get('/list-selection', [ 
+                    "uses"=>[ DataController::class, 'list_selection'],
+                    "description"=>"Get list of data records for selection",
+                    "is_visible"=>false,
+                    "is_allow"=>true
+                ])->name('.list-selection');
+                Route::get('/contact-projects/{id}', [ 
+                    "uses"=>[ DataController::class, 'contact_projects'],
+                    "description"=>"Get contact projects",
+                    "is_visible"=>false,
+                    "is_allow"=>true
+                ])->name('.contact-projects');
+                Route::post('/name-check', [ 
+                    "uses"=>[ DataController::class, 'name_check'],
+                    "description"=>"Check if data name is available",
+                    "is_visible"=>false,
+                    "is_allow"=>true
+                ])->name('.name-check');
+                
+                Route::post('/add-to-list', [ 
+                    "uses"=>[ DataController::class, 'add_to_list'],
+                    "description"=>"Add data record to list",
+                    "is_visible"=>false,
+                    "is_allow"=>true
+                ])->name('.add-to-list');
+
+                Route::post('/data-value/{id}', [ 
+                    "uses"=>[ DataController::class, 'data_value'],
+                    "description"=>"Set data value",
+                    "is_visible"=>false,
+                    "is_allow"=>true
+                ])->name('.data-value');
             
             }); 
 
         });
 
         Route::prefix('model-fields')->name('.model-fields')->group(function(){
-            Route::get('/',  [ ModelFieldController::class, 'index' ])->name('.index'); 
+
+            Route::get('/',  [ 
+                "uses"=> [ModelFieldController::class, 'index'],
+                "description"=>"Model field index page",
+                "is_visible"=>true,
+                "is_allow"=>false 
+            ])->name('.index'); 
 
             Route::prefix('field')->name('.field')->group(function(){
-                Route::get('/list', [ ModelFieldController::class, 'list' ])->name('.list');
-                Route::get('/list-selection', [ ModelFieldController::class, 'list_selection' ])->name('.list-selection');
-                Route::post('/add', [ ModelFieldController::class, 'add' ])->name('.add');
-                Route::put('/update/{id}', [ ModelFieldController::class, 'update' ])->name('.update');
-                Route::delete('/{id}', [ ModelFieldController::class, 'remove' ])->name('.remove');
+                Route::get('/list', [ 
+                    "uses"=> [ModelFieldController::class, 'list'],
+                    "description"=>"Get list of model fields",
+                    "is_visible"=>false,
+                    "is_allow"=>true
+                ])->name('.list');
+                Route::get('/list-selection', [ 
+                    "uses"=> [ModelFieldController::class, 'list_selection'],
+                    "description"=>"Get list of model fields for selection",
+                    "is_visible"=>false,
+                    "is_allow"=>true
+                ])->name('.list-selection');
+                Route::post('/add', [ 
+                    "uses"=> [ModelFieldController::class, 'add'],
+                    "description"=>"Add new model field",
+                    "is_visible"=>true,
+                    "is_allow"=>false
+                ])->name('.add');
+                Route::put('/update/{id}', [ 
+                    "uses"=> [ModelFieldController::class, 'update'],
+                    "description"=>"Update existing model field",
+                    "is_visible"=>true,
+                    "is_allow"=>false
+                ])->name('.update');
+                Route::delete('/{id}', [ 
+                    "uses"=> [ModelFieldController::class, 'remove'],
+                    "description"=>"Remove model field",
+                    "is_visible"=>true,
+                    "is_allow"=>false
+                ])->name('.remove');
             });
             
             Route::prefix('model')->name('.model')->group(function(){
-                Route::get('/list', [ DataModelController::class, 'list' ])->name('.list');
-                Route::post('/add', [  DataModelController::class, 'add' ])->name('.add');
-                Route::get('/get/{id}', [ DataModelController::class, 'get' ])->name('.get');
-                Route::get('/list-selection', [ DataModelController::class, 'list_selection' ])->name('.list-selection');
-                Route::put('/update/{id}', [ DataModelController::class, 'update' ])->name('.update');
-                Route::delete('/{id}', [ DataModelController::class, 'remove' ])->name('.remove');
+                Route::get('/list', [ 
+                    "uses"=> [DataModelController::class, 'list'],
+                    "description"=>"Get list of data models",
+                    "is_visible"=>true,
+                    "is_allow"=>true
+                ])->name('.list');
+                Route::post('/add', [ 
+                    "uses"=> [DataModelController::class, 'add'],
+                    "description"=>"Add new data model",
+                    "is_visible"=>true,
+                    "is_allow"=>false
+                ])->name('.add');
+                Route::get('/get/{id}', [ 
+                    "uses"=> [DataModelController::class, 'get'],
+                    "description"=>"Get data model by ID",
+                    "is_visible"=>true,
+                    "is_allow"=>false
+                ])->name('.get');
+                Route::get('/list-selection', [ 
+                    "uses"=> [DataModelController::class, 'list_selection'],
+                    "description"=>"Get list of data models for selection",
+                    "is_visible"=>true,
+                    "is_allow"=>false
+                ])->name('.list-selection');
+                Route::put('/update/{id}', [ 
+                    "uses"=> [DataModelController::class, 'update'],
+                    "description"=>"Update existing data model",
+                    "is_visible"=>true,
+                    "is_allow"=>false
+                ])->name('.update');
+                Route::delete('/{id}', [ 
+                    "uses"=> [DataModelController::class, 'remove'],
+                    "description"=>"Remove data model",
+                    "is_visible"=>true,
+                    "is_allow"=>false
+                ])->name('.remove');
             });
-        }); 
-
+        });
       });
-        
-
     });
-
-    
 });

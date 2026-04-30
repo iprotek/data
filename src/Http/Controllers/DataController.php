@@ -238,7 +238,7 @@ class DataController extends _CommonController
 
         $modelField = ModelField::find($id->model_field_id);
         if(!$modelField){
-            return ["status"=>0, "message"=>"Field not found.".$id->model_field_id];
+            return ["status"=>0, "message"=>"Field not found."];
         }
 
 
