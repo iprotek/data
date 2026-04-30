@@ -22,21 +22,19 @@ Route::middleware('web')->group(function(){
 
       Route::prefix('iprotek-data')->group(function(){
         Route::prefix('searches')->name('.searches')->group(function(){
-            Route::get('/',  [ 
-                "uses"=>[DataModelController::class, 'index'],
-                "description"=>"Data model index page",
-                "is_visible"=>true,
-                "is_allow"=>false
-            ])->name('.index');
+            Route::get('/', [DataModelController::class, 'index'])
+                ->defaults("_description", "Data model index page")
+                ->defaults("_is_visible", true)
+                ->defaults("_is_allow", false)
+                ->name('.index');
         });
 
         Route::prefix('model-fields')->name('.model-fields')->group(function(){
-            Route::get('/',  [ 
-                "uses"=> [ModelFieldController::class, 'index'],
-                "description"=>"Model field index page",
-                "is_visible"=>true,
-                "is_allow"=>false 
-            ])->name('.index'); 
+            Route::get('/', [ModelFieldController::class, 'index'])
+                ->defaults("_description", "Model field index page")
+                ->defaults("_is_visible", true)
+                ->defaults("_is_allow", false)
+                ->name('.index'); 
         }); 
 
       });
@@ -46,48 +44,42 @@ Route::middleware('web')->group(function(){
     //
     Route::prefix('iprotek-data')->name('.iprotek-data')->group(function(){
 
-      Route::get('/models', [ 
-        "uses"=> [SourceDataController::class, 'get_models'],
-        "description"=>"Source of data models",
-        "is_visible"=>true,
-        "is_allow"=>false
-      ])->name('.get-models');
+      Route::get('/models', [SourceDataController::class, 'get_models'])
+        ->defaults("_description", "Source of data models")
+        ->defaults("_is_visible", true)
+        ->defaults("_is_allow", false)
+        ->name('.get-models');
       //Route::get('/model-fields', [ SourceDataController::class, 'get_model_fields' ])->name('.get-models');
       
       //DATA DELEGATE
-      Route::get('get-delegates', [
-        "uses"=>[DataDelegateController::class, 'get_delegates'],
-        "description"=>"Data delegates list",
-        "is_visible"=>true,
-        "is_allow"=>false 
-      ])->name('.get-delegates');
-      Route::post('add-delegate', [
-        "uses"=>[DataDelegateController::class, 'add_delegate'],
-        "description"=>"Add new data delegate",
-        "is_visible"=>true,
-        "is_allow"=>false
-      ])->name('.add-delegates');
-      Route::put('update-delegate/{id}', [
-        "uses"=>[DataDelegateController::class, 'edit_delegate'],
-        "description"=>"Update existing data delegate",
-        "is_visible"=>true,
-        "is_allow"=>false
-      ])->name('.update-delegates');
+      Route::get('get-delegates', [DataDelegateController::class, 'get_delegates'])
+        ->defaults("_description", "Data delegates list")
+        ->defaults("_is_visible", true)
+        ->defaults("_is_allow", false)
+        ->name('.get-delegates');
+      Route::post('add-delegate', [DataDelegateController::class, 'add_delegate'])
+        ->defaults("_description", "Add new data delegate")
+        ->defaults("_is_visible", true)
+        ->defaults("_is_allow", false)
+        ->name('.add-delegates');
+      Route::put('update-delegate/{id}', [DataDelegateController::class, 'edit_delegate'])
+        ->defaults("_description", "Update existing data delegate")
+        ->defaults("_is_visible", true)
+        ->defaults("_is_allow", false)
+        ->name('.update-delegates');
 
       //GET VALUES
-      Route::get('delegate-values', [
-        "uses"=>[DataDelegateController::class, 'get_delegate_values'],
-        "description"=>"Get delegate values",
-        "is_visible"=>true,
-        "is_allow"=>false
-      ])->name('.get-delegate-values');
+      Route::get('delegate-values', [DataDelegateController::class, 'get_delegate_values'])
+        ->defaults("_description", "Get delegate values")
+        ->defaults("_is_visible", true)
+        ->defaults("_is_allow", false)
+        ->name('.get-delegate-values');
       //update_delegate_values
-      Route::put('update-delegate-values', [
-        "uses"=>[DataDelegateController::class, 'update_delegate_values'],
-        "description"=>"Update delegate values",
-        "is_visible"=>true,
-        "is_allow"=>false
-      ])->name('.update-delegate-values');
+      Route::put('update-delegate-values', [DataDelegateController::class, 'update_delegate_values'])
+        ->defaults("_description", "Update delegate values")
+        ->defaults("_is_visible", true)
+        ->defaults("_is_allow", false)
+        ->name('.update-delegate-values');
 
     });
 
